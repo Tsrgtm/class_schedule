@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>M3 Multimedia Class Schedule</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+
+        .schedule-container {
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            text-align: center;
+        }
+
+        .class-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .class-item {
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+            color: #333;
+        }
+
+        .class-item:last-child {
+            border-bottom: none;
+        }
+
+        @media (max-width: 576px) {
+            .class-item {
+                padding: 10px;
+            }
+        }
+
+        h2 {
+            color: #007bff;
+        }
+
+        .no-classes {
+            color: #6c757d;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="schedule-container">
+            <h2>M3 Multimedia Class Schedule</h2>
+
+            <ul class="class-list" id="classList">
+                <!-- Classes will be dynamically added here -->
+            </ul>
+        </div>
+    </div>
+
+    <script>
+        function updateSchedule() {
+            // Mapping of classes and time slots for each day
+            const scheduleByDay = {
+                sunday: [
+                    { from: "8:30 AM", to: "10:00 AM", className: "Design for Web and Mobile (Lab)", location: "Lab-06 Anew Karki" },
+                    { from: "11:30 AM", to: "1:00 PM", className: "Modelling and Texturing (Lab)", location: "Lab-06 Anew Karki" }
+                ],
+                monday: [
+                    { from: "1:00 PM", to: "2:30 PM", className: "Moving Image and VFX (Lab)", location: "Lab-06 Anew Karki" }
+                ],
+                tuesday: [
+                    { from: "8:30 AM", to: "10:00 AM", className: "Advanced 3D Modelling and Animation", location: "Hall-2" },
+                    { from: "11:30 AM", to: "1:00 PM", className: "Modelling and Texturing", location: "Hall-2" }
+                ],
+                wednesday: [
+                    { from: "9:00 AM", to: "10:30 AM", className: "Design for Web and Mobile", location: "Hall-2" },
+                    { from: "10:30 AM", to: "12:00 PM", className: "Moving Image and VFX", location: "LT-03 Westminster Palace" },
+                    { from: "12:00 PM", to: "1:00 PM", className: "Advanced 3D Modelling and Animation (Tutorial)", location: "SR07- Sujan Khadgi" }
+                ],
+                thursday: [
+                    { from: "7:00 AM", to: "8:00 AM", className: "Design for Web and Mobile (Tutorial)", location: "SR-08 Sajiya Gurung" },
+                    { from: "9:00 AM", to: "10:00 AM", className: "Moving Image and VFX (Tutorial)", location: "SR-04 Tower of London" },
+                    { from: "11:00 AM", to: "12:00 PM", className: "Texturing and Modelling (Tutorial)", location: "SR-05 Rotash Shrestha" }
+                ],
+                friday: [
+                    { from: "11:30 AM", to: "1:00 PM", className: "Advanced 3D Modelling and Animation (Lab)", location: "Lab-05 Pratima Giri" }
+                ],
+                saturday: [],
+            };
+
+            const classListContainer = document.getElementById("classList");
+            const currentDay = getDayName();
+            const schedule = scheduleByDay[currentDay.toLowerCase()];
+
+            // Clear previous classes
+            classListContainer.innerHTML = "";
+
+            // Display classes for the current day
+            if (schedule && schedule.length > 0) {
+                schedule.forEach(classInfo => {
+                    const classItem = document.createElement("li");
+                    classItem.className = "class-item";
+                    classItem.textContent = `${classInfo.from}-${classInfo.to}: ${classInfo.className} (${classInfo.location})`;
+                    classListContainer.appendChild(classItem);
+                });
+            } else {
+                const noClassesItem = document.createElement("li");
+                noClassesItem.className = "class-item no-classes";
+                noClassesItem.textContent = "No classes today!";
+                classListContainer.appendChild(noClassesItem);
+            }
+        }
+
+        function getDayName() {
+            const days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+            const currentDate = new Date();
+            const dayIndex = currentDate.getDay();
+            return days[dayIndex];
+        }
+
+        // Call the function to update the schedule for the current day
+        updateSchedule();
+    </script>
+
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
